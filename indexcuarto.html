@@ -68,7 +68,7 @@ const eq=(a,k)=>{a=N(a);k=N(k);return a==k||(!/\(/.test(k)&&a.replace(/\([ivx]+\
 const rnd=a=>a[Math.random()*a.length|0],sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
 const ls={g(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 let me=ls.g('oxq_me'),rec=ls.g('oxq_rec'),db=null,uid=null,rows=[],view='teoria',G=null;
-const API='PEGAR_AQUI_LA_URL_DEL_APPS_SCRIPT';
+const API='https://script.google.com/macros/s/AKfycbz3s-slKAe_e0nPQ75I7GRoBpvf1C_6qEnac9sJEl10gaXLVBBT5RUbKEOnFywflTrhmQ/exec';
 const live=()=>API.startsWith('http');
 async function load(){if(!live())return;try{const r=await fetch(API);rows=await r.json();db=true;head();if(view=='rank')draw()}catch(e){}}
 async function conn(){load()}
