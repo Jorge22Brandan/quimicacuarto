@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Óxidos y anhídridos · Química 4.º año</title>
+<style>
+:root{--bg:#f4f6fb;--c:#fff;--t:#1b2333;--m:#5a6579;--p:#2563eb;--ok:#15803d;--no:#b91c1c;--b:#d9dfec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--bg:#0e1420;--c:#172033;--t:#e8ecf5;--m:#9aa6bf;--p:#6ea0ff;--ok:#4ade80;--no:#f87171;--b:#2a3550}}
+:root[data-theme=dark]{color-scheme:dark;--bg:#0e1420;--c:#172033;--t:#e8ecf5;--m:#9aa6bf;--p:#6ea0ff;--ok:#4ade80;--no:#f87171;--b:#2a3550}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--t);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:820px;margin:auto;padding:12px}
+h1{font-size:1.25rem;margin:4px 0}h2{font-size:1.1rem;margin:.2rem 0 .5rem}
+.card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:14px;margin:10px 0}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+button,input,select{font:inherit;color:var(--t);background:var(--c);border:1px solid var(--b);border-radius:8px;padding:8px 12px}
+button{cursor:pointer}button.on,button.pri{background:var(--p);border-color:var(--p);color:#fff}
+button:disabled{opacity:.45;cursor:not-allowed}
+.opts{display:grid;gap:8px;margin:10px 0}.opts button{text-align:left}
+.ok{color:var(--ok)}.no{color:var(--no)}.m{color:var(--m);font-size:.9rem}
+.tag{display:inline-block;background:var(--b);border-radius:99px;padding:0 9px;font-size:.8rem}
+.sc{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{border-bottom:1px solid var(--b);padding:6px 8px;text-align:left;white-space:nowrap}
+td.w{white-space:normal;min-width:160px}tr.me{background:color-mix(in srgb,var(--p) 15%,transparent)}
+.bar{height:8px;background:var(--b);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--p)}
+code{background:var(--b);padding:1px 6px;border-radius:5px}
+</style></head><body><main>
+<h1>⚗️ Óxidos básicos y anhídridos</h1>
+<div class="m">Química · 4.º año · Nomenclatura tradicional, Stock y sistemática</div>
+<div id="reg" class="card"></div>
+<nav id="nav"></nav>
+<div id="v"></div>
+</main>
+<script>
+// [fórmula, tipo (b=óxido básico, a=anhídrido), tradicional, Stock, sistemática, uso]
+const D=[
+['Na2O','b','óxido de sodio','óxido de sodio','monóxido de disodio','Fabricación de vidrio y jabones'],
+['K2O','b','óxido de potasio','óxido de potasio','monóxido de dipotasio','Fertilizantes (el potasio se expresa como K2O)'],
+['Li2O','b','óxido de litio','óxido de litio','monóxido de dilitio','Vidrios y cerámicas especiales'],
+['CaO','b','óxido de calcio','óxido de calcio','monóxido de calcio','Cal viva: cemento, construcción y siderurgia'],
+['MgO','b','óxido de magnesio','óxido de magnesio','monóxido de magnesio','Antiácido y ladrillos refractarios'],
+['Al2O3','b','óxido de aluminio','óxido de aluminio','trióxido de dialuminio','Abrasivos y cerámicas; rubí y zafiro'],
+['ZnO','b','óxido de zinc','óxido de zinc','monóxido de zinc','Protectores solares y pomadas'],
+['FeO','b','óxido ferroso','óxido de hierro (II)','monóxido de hierro','Pigmentos negros y siderurgia'],
+['Fe2O3','b','óxido férrico','óxido de hierro (III)','trióxido de dihierro','Herrumbre, pigmento rojo y mineral hematita para fabricar acero'],
+['Cu2O','b','óxido cuproso','óxido de cobre (I)','monóxido de dicobre','Pigmento rojo y pinturas antiincrustantes'],
+['CuO','b','óxido cúprico','óxido de cobre (II)','monóxido de cobre','Colorante verde-azulado en vidrio y cerámica'],
+['HgO','b','óxido mercúrico','óxido de mercurio (II)','monóxido de mercurio','Pilas antiguas (en desuso por su toxicidad)'],
+['PbO','b','óxido plumboso','óxido de plomo (II)','monóxido de plomo','Vidrio cristal y baterías'],
+['CO','a','anhídrido carbonoso','óxido de carbono (II)','monóxido de carbono','Gas tóxico de combustión incompleta; reductor en siderurgia'],
+['CO2','a','anhídrido carbónico','óxido de carbono (IV)','dióxido de carbono','Gaseosas, extintores, hielo seco y fotosíntesis'],
+['SO2','a','anhídrido sulfuroso','óxido de azufre (IV)','dióxido de azufre','Conservante del vino y frutas secas; causa lluvia ácida'],
+['SO3','a','anhídrido sulfúrico','óxido de azufre (VI)','trióxido de azufre','Producción de ácido sulfúrico'],
+['N2O3','a','anhídrido nitroso','óxido de nitrógeno (III)','trióxido de dinitrógeno','Obtención de ácido nitroso y colorantes'],
+['N2O5','a','anhídrido nítrico','óxido de nitrógeno (V)','pentóxido de dinitrógeno','Obtención de ácido nítrico para fertilizantes'],
+['Cl2O','a','anhídrido hipocloroso','óxido de cloro (I)','monóxido de dicloro','Obtención de hipoclorito (lavandina)'],
+['Cl2O3','a','anhídrido cloroso','óxido de cloro (III)','trióxido de dicloro','Obtención de ácido cloroso y blanqueadores'],
+['Cl2O5','a','anhídrido clórico','óxido de cloro (V)','pentóxido de dicloro','Obtención de ácido clórico'],
+['Cl2O7','a','anhídrido perclórico','óxido de cloro (VII)','heptóxido de dicloro','Obtención de ácido perclórico'],
+['P2O3','a','anhídrido fosforoso','óxido de fósforo (III)','trióxido de difósforo','Síntesis de compuestos de fósforo'],
+['P2O5','a','anhídrido fosfórico','óxido de fósforo (V)','pentóxido de difósforo','Fertilizantes y desecante de laboratorio'],
+['SiO2','a','anhídrido silícico','óxido de silicio (IV)','dióxido de silicio','Vidrio, arena, cuarzo y chips']];
+const NK=['Tradicional','Stock','Sistemática'],ROUNDS=8,MIN=6;
+const $=s=>document.querySelector(s),sub=f=>f.replace(/(\d+)/g,'<sub>$1</sub>');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const N=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').replace(/ \(/g,'(').trim();
+const F=s=>s.replace(/[₀-₉]/g,c=>c.charCodeAt(0)-8320).replace(/\s/g,'');
+const eq=(a,k)=>{a=N(a);k=N(k);return a==k||(!/\(/.test(k)&&a.replace(/\([ivx]+\)$/,'')==k)};
+const rnd=a=>a[Math.random()*a.length|0],sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const ls={g(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let me=ls.g('oxq_me'),rec=ls.g('oxq_rec'),db=null,uid=null,rows=[],view='teoria',G=null;
+const API='PEGAR_AQUI_LA_URL_DEL_APPS_SCRIPT';
+const live=()=>API.startsWith('http');
+async function load(){if(!live())return;try{const r=await fetch(API);rows=await r.json();db=true;head();if(view=='rank')draw()}catch(e){}}
+async function conn(){load()}
+async function save(){ls.s('oxq_rec',rec);if(live()&&me){try{await fetch(API,{method:'POST',mode:'no-cors',body:JSON.stringify({id:me.id,name:rec.name,curso:rec.curso,best:rec.best,total:rec.total,n:rec.tries.length})})}catch(e){}}}
+const tot=r=>Math.round(([1,2,3].reduce((a,l)=>a+(r.best[l]||0),0))*10)/10;
+function register(){const n=$('#nm').value.trim(),c=$('#cu').value.trim();if(!n||!c){alert('Completá tu nombre y curso.');return}
+ me={name:n,curso:c,id:(self.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random())};uid=me.id;ls.s('oxq_me',me);rec={best:{1:0,2:0,3:0},tries:[]};Object.assign(rec,{id:uid,name:n,curso:c,total:tot(rec)});save();head();draw()}
+function head(){$('#reg').innerHTML=me?`<b>👤 ${esc(me.name)}</b> · ${esc(me.curso)} <button onclick="me=null;head()">Cambiar</button> <span class="m">${db?'Ranking compartido activo':'Sin conexión al ranking: tu progreso se guarda solo en este dispositivo'}</span>`
+ :`<b>Registrate para jugar</b><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><input id="nm" placeholder="Nombre y apellido"><input id="cu" placeholder="Curso (ej. 4.º B)" size="12"><button class="pri" onclick="register()">Entrar</button></div>`}
+const TABS=[['teoria','📘 Teoría'],['ej','✏️ Ejemplos'],['tabla','🧪 Compuestos'],['jugar','🎮 Jugar'],['rank','🏆 Ranking'],['nota','📊 Mi nota']];
+function draw(){$('#nav').innerHTML=TABS.map(t=>`<button class="${t[0]==view?'on':''}" onclick="view='${t[0]}';G=null;if(view=='rank')load();draw()">${t[1]}</button>`).join('');
+ $('#v').innerHTML=({teoria,ej,tabla,jugar,rank,nota})[view]()}
+function teoria(){return `<div class="card"><h2>Óxidos básicos</h2><p>Se forman por <b>metal + oxígeno</b> (el oxígeno actúa con número de oxidación −2). Al reaccionar con agua forman hidróxidos. Ej.: <code>Na<sub>2</sub>O</code>, <code>CaO</code>, <code>Fe<sub>2</sub>O<sub>3</sub></code>.</p>
+<h2>Anhídridos (óxidos ácidos)</h2><p>Se forman por <b>no metal + oxígeno</b>. Al reaccionar con agua forman oxoácidos. Ej.: <code>CO<sub>2</sub></code>, <code>SO<sub>3</sub></code>, <code>N<sub>2</sub>O<sub>5</sub></code>.</p></div>
+<div class="card"><h2>Cómo formular</h2><ol><li>Escribí el símbolo del elemento y el del oxígeno (O).</li><li>Método cruzado: el número de oxidación del elemento pasa como subíndice del O, y el 2 del oxígeno pasa como subíndice del elemento.</li><li>Simplificá si se puede (ej. S<sub>2</sub>O<sub>6</sub> → SO<sub>3</sub>) y no escribas el subíndice 1.</li></ol></div>
+<div class="card"><h2>Las tres nomenclaturas</h2>
+<p><b>Tradicional:</b> óxido de X si tiene una sola valencia. Con dos valencias: <i>-oso</i> (menor) e <i>-ico</i> (mayor), ej. óxido ferroso / férrico. Los anhídridos usan «anhídrido» + sufijo; con cuatro valencias (Cl, Br, I): <i>hipo…oso, …oso, …ico, per…ico</i>.</p>
+<p><b>Stock:</b> óxido de X (número romano = número de oxidación), ej. óxido de hierro (III). Si el metal tiene una sola valencia no se indica el número.</p>
+<p><b>Sistemática:</b> prefijos mono-, di-, tri-, tetra-, penta-, hexa-, hepta- delante de «óxido» y del elemento, ej. trióxido de dihierro. Ante «o»: monóxido, pentóxido, heptóxido.</p></div>`}
+function ej(){return `<div class="card"><h2>Ejemplo 1 · Del nombre a la fórmula</h2><p><b>Óxido férrico</b></p><ol><li>Férrico = mayor valencia del hierro → Fe(III).</li><li>Cruzamos: Fe<sub>2</sub>O<sub>3</sub>.</li><li>No se puede simplificar.</li></ol><p class="ok">Fe<sub>2</sub>O<sub>3</sub> · Stock: óxido de hierro (III) · Sistemática: trióxido de dihierro</p></div>
+<div class="card"><h2>Ejemplo 2 · De la fórmula a los tres nombres</h2><p><b>Cl<sub>2</sub>O<sub>7</sub></b></p><ol><li>Cl es no metal → anhídrido. Número de oxidación: 7 (2 × 7 = 14 = 7 × 2 del oxígeno).</li><li>Con 7 el cloro usa <i>per…ico</i>.</li></ol><p class="ok">Tradicional: anhídrido perclórico · Stock: óxido de cloro (VII) · Sistemática: heptóxido de dicloro</p></div>
+<div class="card"><h2>Ejemplo 3 · Simplificando</h2><p><b>Anhídrido carbónico</b></p><ol><li>Carbónico = valencia 4 del carbono.</li><li>Cruzando: C<sub>2</sub>O<sub>4</sub> → se simplifica por 2.</li></ol><p class="ok">CO<sub>2</sub> · óxido de carbono (IV) · dióxido de carbono</p></div>`}
+function tabla(){return `<div class="card sc"><input placeholder="Buscar fórmula, nombre o uso…" oninput="tf(this.value)" style="width:100%;box-sizing:border-box;margin-bottom:8px"><table><thead><tr><th>Fórmula</th><th>Tipo</th><th>Tradicional</th><th>Stock</th><th>Sistemática</th><th>Usos</th></tr></thead><tbody id="tb">${trs(D)}</tbody></table></div>`}
+const trs=a=>a.map(d=>`<tr><td><b>${sub(d[0])}</b></td><td>${d[1]=='b'?'Básico':'Anhídrido'}</td><td>${d[2]}</td><td>${d[3]}</td><td>${d[4]}</td><td class="w">${d[5]}</td></tr>`).join('');
+function tf(q){q=N(q);$('#tb').innerHTML=trs(D.filter(d=>N(d.join(' ')).includes(q)))}
+function Q(l){const d=rnd(D),k=2+(Math.random()*3|0),info=`${sub(d[0])}: ${d[2]} · ${d[3]} · ${d[4]}. <i>Uso: ${d[5]}</i>`;
+ if(l==3&&Math.random()<.4){const o=sh([d,...sh(D.filter(x=>x!=d)).slice(0,3)]).map(x=>x[0]);return{q:`¿Qué compuesto tiene este uso? <b>${d[5]}</b>`,o,f:1,ok:a=>a==d[0],ans:sub(d[0]),info}}
+ if(l==1&&Math.random()<.25)return{q:`${sub(d[0])}: ¿es un óxido básico o un anhídrido?`,o:['Óxido básico','Anhídrido'],ok:a=>a==(d[1]=='b'?'Óxido básico':'Anhídrido'),ans:d[1]=='b'?'Óxido básico':'Anhídrido',info};
+ if(l==1){const o=sh([...new Set([d[k],...sh(D.filter(x=>x!=d&&x[1]==d[1])).map(x=>x[k])].filter((u,i,a)=>i==0||u!=d[k]).slice(0,4))].slice(0,4));if(!o.includes(d[k]))o[0]=d[k];
+  return{q:`Nombre <b>${NK[k-2]}</b> de ${sub(d[0])}`,o:sh(o),ok:a=>a==d[k],ans:d[k],info}}
+ if(l==2)return{q:`Escribí el nombre <b>${NK[k-2]}</b> de ${sub(d[0])}`,t:1,ok:a=>eq(a,d[k]),ans:d[k],info};
+ return{q:`Escribí la fórmula de <b>${d[k]}</b> <span class="m">(${NK[k-2]})</span>`,t:1,ok:a=>F(a)==d[0],ans:sub(d[0]),info}}
+const ok=l=>l==1||(rec&&rec.best[l-1]>=MIN);
+function jugar(){if(!me)return '<div class="card">Registrate arriba para jugar.</div>';if(G)return ask();
+ const T=['','Aprendiz · elegí la opción correcta','Químico · escribí el nombre','Experto · escribí la fórmula y reconocé usos'];
+ return [1,2,3].map(l=>`<div class="card"><h2>Nivel ${l}</h2><p>${T[l]}</p><p class="m">Mejor nota: <b>${rec.best[l]||0}</b>/10${l>1&&!ok(l)?' · Se desbloquea con nota ≥ '+MIN+' en el nivel '+(l-1):''}</p><button class="pri" ${ok(l)?'':'disabled'} onclick="go(${l})">Jugar (${ROUNDS} preguntas)</button></div>`).join('')}
+function go(l){G={l,i:0,c:0,q:Q(l),done:0};draw()}
+function ask(){if(G.i>=ROUNDS)return fin();const q=G.q;
+ return `<div class="card"><div class="bar"><i style="width:${G.i/ROUNDS*100}%"></i></div><p class="m">Nivel ${G.l} · Pregunta ${G.i+1}/${ROUNDS} · Aciertos: ${G.c}</p><p>${q.q}</p>`+
+ (q.t?`<input id="an" placeholder="Tu respuesta" autocomplete="off" ${G.done?'disabled':''} onkeydown="if(event.key=='Enter')ans()"> <button class="pri" onclick="ans()" ${G.done?'disabled':''}>Comprobar</button>`
+ :`<div class="opts">${q.o.map(o=>`<button ${G.done?'disabled':''} onclick="ans(this.dataset.v)" data-v="${esc(o)}">${q.f?sub(o):esc(o)}</button>`).join('')}</div>`)+
+ (G.done?`<p class="${G.last?'ok':'no'}"><b>${G.last?'✔ ¡Correcto!':'✘ Incorrecto'}</b> ${G.last?'':'Respuesta: '+q.ans}</p><p class="m">${q.info}</p><button class="pri" onclick="G.i++;G.q=Q(G.l);G.done=0;draw()">${G.i+1>=ROUNDS?'Ver resultado':'Siguiente'}</button>`:'')+`</div>`}
+function ans(v){if(G.done)return;if(v===undefined)v=$('#an').value;if(!String(v).trim())return;G.last=G.q.ok(v);if(G.last)G.c++;G.done=1;draw()}
+function fin(){const n=Math.round(G.c/ROUNDS*100)/10,l=G.l;rec.best[l]=Math.max(rec.best[l]||0,n);rec.tries=[{l,n,d:new Date().toLocaleDateString('es-AR')},...rec.tries].slice(0,30);rec.total=tot(rec);save();
+ const nx=n>=MIN&&l<3?`<p class="ok">¡Nivel ${l+1} desbloqueado!</p>`:'';G=null;
+ return `<div class="card"><h2>Resultado nivel ${l}</h2><p style="font-size:2rem;margin:.2rem 0"><b>${n}</b>/10</p><p>${n>=MIN?'¡Aprobado!':'Repasá la teoría y volvé a intentar.'}</p>${nx}<button class="pri" onclick="view='jugar';draw()">Volver</button></div>`}
+function rank(){const r=(db?rows:(rec?[rec]:[])).slice().sort((a,b)=>b.total-a.total);
+ return `<div class="card sc"><h2>Ranking y notas del curso</h2>${db?'':'<p class="m">Sin conexión con la planilla del docente: se muestra solo tu resultado.</p>'}<table><thead><tr><th>#</th><th>Alumno</th><th>Curso</th><th>N1</th><th>N2</th><th>N3</th><th>Total</th><th>Intentos</th></tr></thead><tbody>${r.map((x,i)=>`<tr class="${x.id==uid?'me':''}"><td>${i+1}</td><td>${esc(x.name)}</td><td>${esc(x.curso)}</td><td>${x.best[1]||0}</td><td>${x.best[2]||0}</td><td>${x.best[3]||0}</td><td><b>${x.total}</b>/30</td><td>${x.n??x.tries.length}</td></tr>`).join('')||'<tr><td colspan=8>Sin datos aún</td></tr>'}</tbody></table></div>`}
+function nota(){if(!me)return '<div class="card">Registrate para ver tus notas.</div>';
+ return `<div class="card"><h2>Mis notas</h2>${[1,2,3].map(l=>`<p>Nivel ${l}: <b>${rec.best[l]||0}</b>/10 <span class="tag">${rec.best[l]>=MIN?'Aprobado':'Pendiente'}</span></p>`).join('')}<p>Puntaje total: <b>${rec.total}</b>/30</p></div>
+<div class="card sc"><h2>Últimos intentos</h2><table><thead><tr><th>Fecha</th><th>Nivel</th><th>Nota</th></tr></thead><tbody>${rec.tries.map(t=>`<tr><td>${t.d}</td><td>${t.l}</td><td>${t.n}</td></tr>`).join('')||'<tr><td colspan=3>Todavía no jugaste</td></tr>'}</tbody></table></div>`}
+if(me&&!rec)rec={id:me.id,name:me.name,curso:me.curso,total:0,best:{1:0,2:0,3:0},tries:[]};
+if(me)uid=me.id;head();draw();conn();
+</script></body></html>
